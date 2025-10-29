@@ -47,7 +47,11 @@ COMMIT
 :FORWARD ACCEPT [0:0]
 :OUTPUT ACCEPT [0:0]
 :ACLSRVC - [0:0]
+:COUNT_ONLY - [0:0]
 :SEC_INCOMING - [0:0]
+:TENANT_FORWARD - [0:0]
+:TENANT_INPUT - [0:0]
+:TENANT_OUTPUT - [0:0]
 :VIRTSVR - [0:0]
 -A INPUT -j ACLSRVC
 -A INPUT -i ppp0.1 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
@@ -59,6 +63,7 @@ COMMIT
 -A INPUT -i ppp0.1 -p udp -m udp --dport 30007 -j ACCEPT
 -A INPUT -i ppp0.1 -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -m limit --limit 6/hour -j NFLOG --nflog-prefix  "Intrusion -> " --nflog-group 16
 -A INPUT -i ppp0.1 -j DROP
+-A FORWARD -j TENANT_FORWARD
 -A FORWARD -j SEC_INCOMING
 -A FORWARD -j VIRTSVR
 -A FORWARD -i ppp0.1 -p icmp -m icmp --icmp-type 3 -j DROP
