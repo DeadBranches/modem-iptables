@@ -82,5 +82,6 @@ COMMIT
 -A TENANT_FORWARD -p icmp -m icmp --icmp-type 3 -j ACCEPT
 -A TENANT_FORWARD -p icmp -m icmp --icmp-type 11 -j ACCEPT
 -A TENANT_FORWARD -i ppp0.1 -m conntrack --ctstate INVALID -j DROP
+-A TENANT_FORWARD -i ppp0.1 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 COMMIT
 # Completed on
