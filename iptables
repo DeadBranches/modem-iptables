@@ -84,5 +84,6 @@ COMMIT
 -A TENANT_FORWARD -i ppp0.1 -m conntrack --ctstate INVALID -j DROP
 -A TENANT_FORWARD -i ppp0.1 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A TENANT_FORWARD -s 192.168.1.0/25 -i br0 -o ppp0.1 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+-A TENANT_FORWARD -s 192.168.1.128/25 -o ppp0.1 -j DROP
 COMMIT
 # Completed on
