@@ -76,6 +76,7 @@ COMMIT
 -A FORWARD -i ppp0.1 -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -m limit --limit 6/hour -j NFLOG --nflog-prefix  "Intrusion -> " --nflog-group 16
 -A FORWARD -i ppp0.1 -j DROP
 -A FORWARD -i ppp0.1 -p icmp -m icmp --icmp-type 3 -j DROP
+-A OUTPUT -p icmp -m icmp --icmp-type 3/4 -j ACCEPT
 -A OUTPUT -p icmp -m icmp --icmp-type 3 -j DROP
 -A OUTPUT -j TENANT_OUTPUT
 COMMIT
