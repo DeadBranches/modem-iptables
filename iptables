@@ -79,5 +79,7 @@ COMMIT
 -A OUTPUT -p icmp -m icmp --icmp-type 3/4 -j ACCEPT
 -A OUTPUT -p icmp -m icmp --icmp-type 3 -j DROP
 -A OUTPUT -j TENANT_OUTPUT
+-A TENANT_FORWARD -p icmp -m icmp --icmp-type 3 -j ACCEPT
+-A TENANT_FORWARD -p icmp -m icmp --icmp-type 11 -j ACCEPT
 COMMIT
 # Completed on
