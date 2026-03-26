@@ -57,7 +57,7 @@ COMMIT
 -A INPUT -j TENANT_INPUT
 -A INPUT -j ACLSRVC
 -A INPUT -i ppp0.1 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
--A INPUT -i ppp0.1 -p udp -m udp --dport 500 -j ACCEPT
+-A INPUT -i ppp0.1 -p udp -m udp --dport 500 -j ACCEPT 
 -A INPUT -i ppp0.1 -p esp -j ACCEPT
 -A INPUT -i ppp0.1 -p ah -j ACCEPT
 -A INPUT -i ppp0.1 ! -p esp -m mark --mark 0x10000000/0x10000000 -j ACCEPT
