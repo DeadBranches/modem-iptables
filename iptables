@@ -71,7 +71,7 @@ COMMIT
 -A FORWARD -i ppp0.1 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A FORWARD -i ppp0.1 ! -p esp -m mark --mark 0x10000000/0x10000000 -j ACCEPT
 -A FORWARD -i ppp0.1 ! -p ah -m mark --mark 0x10000000/0x10000000 -j ACCEPT
--A FORWARD -i ppp0.1 -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -m limit --limit 6/hour -j NFLOG --nflog-prefix  "Intrusion -> " --nflog-group 16
+-A FORWARD -i ppp0.1 -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -m limit --limit 6/hour -j NFLOG --nflog-prefix  "Intrusion -> " --nflog-group 16 
 -A FORWARD -i ppp0.1 -j DROP
 -A OUTPUT -p icmp -m icmp --icmp-type 3/4 -j ACCEPT
 -A OUTPUT -p icmp -m icmp --icmp-type 3 -j DROP
