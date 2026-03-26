@@ -53,18 +53,17 @@ COMMIT
 :TENANT_INPUT - [0:0]
 :TENANT_OUTPUT - [0:0]
 :VIRTSVR - [0:0]
--A INPUT -s 192.168.1.0/24 -i br0 -p tcp -m tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
--A INPUT -j TENANT_INPUT
--A INPUT -j ACLSRVC
--A INPUT -i ppp0.1 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
--A INPUT -i ppp0.1 -p udp -m udp --dport 500 -j ACCEPT 
--A INPUT -i ppp0.1 -p esp -j ACCEPT 
--A INPUT -i ppp0.1 -p ah -j ACCEPT 
--A INPUT -i ppp0.1 ! -p esp -m mark --mark 0x10000000/0x10000000 -j ACCEPT 
--A INPUT -i ppp0.1 ! -p ah -m mark --mark 0x10000000/0x10000000 -j ACCEPT 
--A INPUT -i ppp0.1 -p udp -m udp --dport 30007 -j ACCEPT 
+-A INPUT -i ppp0.1 -m conntrack --ctstate INVALID -j DROP
+-A INPUT -i lo -j ACCEPT
+-A INPUT -i br0 -j ACCEPT
+-A INPUT -i ppp0.1 -p icmp -m icmp --icmp-type 11 -j ACCEPT
+-A INPUT -i ppp0.1 -p icmp -m icmp --icmp-type 3 -j ACCEPT
+-A INPUT -i ppp0.1 -p tcp -m tcp --dport 7547 -j COUNT_ONLY
+-A INPUT -i ppp0.1 -p tcp -m tcp --dport 30005 -j DROP
+-A INPUT -i ppp0.1 -p udp -m udp --dport 30007 -j DROP
+-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A INPUT -i ppp0.1 -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -m limit --limit 6/hour -j NFLOG --nflog-prefix  "Intrusion -> " --nflog-group 16
--A INPUT -i ppp0.1 -j DROP
+-A INPUT -j DROP
 -A FORWARD -j TENANT_FORWARD
 -A FORWARD -j SEC_INCOMING
 -A FORWARD -j VIRTSVR
