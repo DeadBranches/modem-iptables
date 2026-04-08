@@ -7,8 +7,6 @@
 :PHP_APPS - [0:0]
 :PHP_CPTPRT - [0:0]
 -A PREROUTING -i br0 -j PHP_APPS
--A PREROUTING -i ppp0.1 -p tcp -m tcp --dport 30005 -j ACCEPT
--A PREROUTING -i ppp0.1 -p udp -m udp --dport 30007 -j ACCEPT
 -A POSTROUTING -s 192.168.1.0/24 -o ppp0.1 -j MASQUERADE
 -A PHP_APPS -d 255.255.255.255/32 -j RETURN
 -A PHP_APPS -d 192.168.1.1/32 -j RETURN
