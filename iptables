@@ -41,7 +41,6 @@ COMMIT
 :FORWARD REJECT [0:0]
 :OUTPUT ACCEPT [0:0]
 :COUNT_ONLY - [0:0]
-:VIRTSVR - [0:0]
 -A INPUT -i ppp0.1 -m conntrack --ctstate INVALID -j DROP
 -A INPUT -i lo -j ACCEPT
 -A INPUT -i br0 -j ACCEPT
@@ -62,6 +61,5 @@ COMMIT
 -A FORWARD -j DROP
 -A OUTPUT -p icmp -m icmp --icmp-type 3/4 -j ACCEPT
 -A OUTPUT -p icmp -m icmp --icmp-type 3 -j DROP
--A OUTPUT -j ACCEPT
 COMMIT
 # Completed on
