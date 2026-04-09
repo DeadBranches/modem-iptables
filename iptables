@@ -11,11 +11,11 @@
 -A PREROUTING -i ppp0.1 -s 172.16.0.0/12 -j DROP
 -A PREROUTING -i ppp0.1 -s 192.168.0.0/16 -j DROP
 -A PREROUTING -i ppp0.1 -s 127.0.0.0/8 -j DROP
-# Port forwards go here as needed, e.g.:
-# -A PREROUTING -i ppp0.1 -p tcp --dport 443 -j DNAT --to-destination 192.168.1.x:443
+#### port forwarding:
+#### -A PREROUTING -i ppp0.1 -p tcp --dport 443 -j DNAT --to-destination 192.168.1.x:443
 -A POSTROUTING -s 192.168.1.0/24 -o ppp0.1 -j MASQUERADE
-# If adding port forwards and need hairpin NAT:
-# -A POSTROUTING -s 192.168.1.0/24 -d 192.168.1.x -p tcp --dport 443 -j MASQUERADE
+#### port forwarding and hairpin NAT:
+#### -A POSTROUTING -s 192.168.1.0/24 -d 192.168.1.x -p tcp --dport 443 -j MASQUERADE
 -A PHP_APPS -d 255.255.255.255/32 -j RETURN
 -A PHP_APPS -d 192.168.1.1/32 -j RETURN
 -A PHP_APPS -p tcp -m tcp --dport 80 -j PHP_CPTPRT
@@ -40,12 +40,6 @@ COMMIT
 :INPUT ACCEPT [0:0]
 :FORWARD ACCEPT [0:0]
 :OUTPUT ACCEPT [0:0]
-:ACLSRVC - [0:0]
-:COUNT_ONLY - [0:0]
-:SEC_INCOMING - [0:0]
-:TENANT_FORWARD - [0:0]
-:TENANT_INPUT - [0:0]
-:TENANT_OUTPUT - [0:0]
 :VIRTSVR - [0:0]
 -A INPUT -i ppp0.1 -m conntrack --ctstate INVALID -j DROP
 -A INPUT -i lo -j ACCEPT
@@ -70,6 +64,5 @@ COMMIT
 -A FORWARD -j DROP
 -A OUTPUT -p icmp -m icmp --icmp-type 3/4 -j ACCEPT
 -A OUTPUT -p icmp -m icmp --icmp-type 3 -j DROP
--A OUTPUT -j TENANT_OUTPUT
 COMMIT
 # Completed on
