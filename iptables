@@ -6,6 +6,8 @@
 :POSTROUTING ACCEPT [0:0]
 :PHP_APPS - [0:0]
 :PHP_CPTPRT - [0:0]
+-A PREROUTING -i br0 -s 192.168.1.8/29 -p udp --dport 53 -j RETURN
+-A PREROUTING -i br0 -s 192.168.1.8/29 -p tcp --dport 53 -j RETURN
 -A PREROUTING -i br0 -s 192.168.1.40 -p udp --dport 53 -j RETURN
 -A PREROUTING -i br0 -s 192.168.1.40 -p tcp --dport 53 -j RETURN
 -A PREROUTING -i br0 -p udp --dport 53 -j DNAT --to-destination 192.168.1.40:53
