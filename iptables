@@ -67,6 +67,8 @@ COMMIT
 -A FORWARD -i ppp0.1 -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -m limit --limit 10/min -j NFLOG --nflog-prefix  "Intrusion -> " --nflog-group 16
 -A FORWARD -i ppp0.1 -p udp -m limit --limit 1/sec --limit-burst 10 -j NFLOG --nflog-prefix "UDP probe -> " --nflog-group 16
 -A FORWARD -i ppp0.1 -p icmp -m limit --limit 1/sec --limit-burst 10 -j NFLOG --nflog-prefix "ICMP probe -> " --nflog-group 16
+-A FORWARD -i br0 -o br0 -d 192.168.1.40 -p udp --dport 53 -j ACCEPT
+-A FORWARD -i br0 -o br0 -d 192.168.1.40 -p tcp --dport 53 -j ACCEPT
 -A FORWARD -j DROP
 -A OUTPUT -p icmp -m icmp --icmp-type 3/4 -j ACCEPT
 -A OUTPUT -p icmp -m icmp --icmp-type 3 -j DROP
