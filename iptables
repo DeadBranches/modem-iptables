@@ -57,10 +57,10 @@ COMMIT
 -A INPUT -j DROP
 -A FORWARD -m conntrack --ctstate INVALID -j DROP
 -A FORWARD ! -s 192.168.1.0/24 -i br0 -j DROP
--A FORWARD -s 192.168.1.0/25 -i br0 -o ppp0.1 -m conntrack --ctstate NEW,ESTABLISHED,RELATED -j ACCEPT
--A FORWARD -i ppp0.1 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A FORWARD -i br0 -p udp --dport 853 -j DROP
 -A FORWARD -i br0 -p tcp --dport 853 -j DROP
+-A FORWARD -s 192.168.1.0/25 -i br0 -o ppp0.1 -m conntrack --ctstate NEW,ESTABLISHED,RELATED -j ACCEPT
+-A FORWARD -i ppp0.1 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A FORWARD -s 192.168.1.128/25 -o ppp0.1 -j DROP
 -A FORWARD -i ppp0.1 -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -m limit --limit 10/min -j NFLOG --nflog-prefix  "Intrusion -> " --nflog-group 16
 -A FORWARD -i ppp0.1 -p udp -m limit --limit 1/sec --limit-burst 10 -j NFLOG --nflog-prefix "UDP probe -> " --nflog-group 16
