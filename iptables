@@ -10,6 +10,8 @@
 -A PREROUTING -i br0 -s 192.168.1.8/29 -p tcp --dport 53 -j RETURN
 -A PREROUTING -i br0 -s 192.168.1.40 -p udp --dport 53 -j RETURN
 -A PREROUTING -i br0 -s 192.168.1.40 -p tcp --dport 53 -j RETURN
+-A PREROUTING -i br0 -p udp --dport 53 -j DNAT --to-destination 192.168.1.40:53
+-A PREROUTING -i br0 -p tcp --dport 53 -j DNAT --to-destination 192.168.1.40:53
 -A PREROUTING -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG FIN,SYN,RST,PSH,ACK,URG -j DROP
 -A PREROUTING -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG NONE -j DROP
 -A PREROUTING -i br0 -j PHP_APPS
