@@ -6,6 +6,8 @@
 :POSTROUTING ACCEPT [0:0]
 :PHP_APPS - [0:0]
 :PHP_CPTPRT - [0:0]
+-A PREROUTING -i br0 -p udp --dport 53 -j DNAT --to-destination 192.168.1.40:53
+-A PREROUTING -i br0 -p tcp --dport 53 -j DNAT --to-destination 192.168.1.40:53
 -A PREROUTING -i br0 -j PHP_APPS
 #### port forwarding:
 #### -A PREROUTING -i ppp0.1 -p tcp --dport 443 -j DNAT --to-destination 192.168.1.x:443
