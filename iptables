@@ -4,8 +4,6 @@
 :INPUT ACCEPT [0:0]
 :OUTPUT ACCEPT [0:0]
 :POSTROUTING ACCEPT [0:0]
-:PHP_APPS - [0:0]
-:PHP_CPTPRT - [0:0]
 -A PREROUTING -i br0 -s 192.168.1.8/29 -p udp --dport 53 -j RETURN
 -A PREROUTING -i br0 -s 192.168.1.8/29 -p tcp --dport 53 -j RETURN
 -A PREROUTING -i br0 -s 192.168.1.40 -p udp --dport 53 -j RETURN
@@ -54,7 +52,7 @@ COMMIT
 -A INPUT -i ppp0.1 -p tcp -m tcp --dport 7547 -j COUNT_ONLY
 -A INPUT -i ppp0.1 -p tcp -m tcp --dport 7547 -j DROP
 -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
--A INPUT -i ppp0.1 -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -m limit --limit 1/sec --limit-burst 10 -j LOG --log-prefix  "Intrusion -> " --log-level warning
+-A INPUT -i ppp0.1 -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -m limit --limit 15/min --limit-burst 10 -j LOG --log-prefix  "Intrusion -> " --log-level warning
 -A INPUT -j DROP
 -A FORWARD -m conntrack --ctstate INVALID -j DROP
 -A FORWARD ! -s 192.168.1.0/24 -i br0 -j DROP
@@ -64,8 +62,8 @@ COMMIT
 -A FORWARD -i ppp0.1 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A FORWARD -s 192.168.1.128/25 -o ppp0.1 -j DROP
 -A FORWARD -i ppp0.1 -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -m limit --limit 10/min -j LOG --log-prefix  "Intrusion FWD -> " --log-level warning
--A FORWARD -i ppp0.1 -p udp -m limit --limit 1/sec --limit-burst 10 -j LOG --log-prefix "UDP probe -> " --log-level warning
--A FORWARD -i ppp0.1 -p icmp -m limit --limit 1/sec --limit-burst 10 -j LOG --log-prefix "ICMP probe -> " --log-level warning
+-A FORWARD -i ppp0.1 -p udp -m limit --limit 15/min --limit-burst 10 -j LOG --log-prefix "UDP probe -> " --log-level warning
+-A FORWARD -i ppp0.1 -p icmp -m limit --limit 15/min --limit-burst 10 -j LOG --log-prefix "ICMP probe -> " --log-level warning
 -A FORWARD -i br0 -o br0 -d 192.168.1.40 -p udp --dport 53 -j ACCEPT
 -A FORWARD -i br0 -o br0 -d 192.168.1.40 -p tcp --dport 53 -j ACCEPT
 -A FORWARD -j DROP
