@@ -1,0 +1,5 @@
+## file-location: /data/var/spool/cron/crontabs/admin
+## post-hook: chmod 600 /data/var/spool/cron/crontabs/admin
+
+*/1 * * * * /data/usr/local/bin/restore-iptables-rules.sh
+0 */6 * * * /data/usr/local/bin/rotate-logs.sh
