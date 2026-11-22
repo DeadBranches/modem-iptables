@@ -1,0 +1,22 @@
+# /data/etc/profile.modem
+
+# Put your stuff first, then vendor paths
+# export PATH=/data/usr/bin:/data/home/root/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# export PATH="/data/bin:/data/usr/bin:/data/usr/local/bin:/data/usr/bin:/data/home/root/bin:/home/bin:/home/scripts:/usr/local/jamvm/bin:/opt/scripts:/usr/sbin:/usr/bin:/opt/bin:/sbin:/bin"
+
+
+# Persistent history in the writable area
+export HISTFILE=/data/root/.bash_history
+export HISTSIZE=5000
+export HISTCONTROL=ignoredups:erasedups
+
+# Pretty-ish prompt with colors
+# \u = user, \h = host, \w = cwd, \! = history number, $? = last exit status
+PS1='\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\] \[\e[1;30m\]$?\[\e[0m\]\$ '
+
+# Some handy aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+# alias grep='grep --color=auto'
+alias nvim='vi'
