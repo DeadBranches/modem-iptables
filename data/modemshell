@@ -1,0 +1,35 @@
+#!/data/bin/sh
+
+# modemshell - initialize interactive shell session
+#
+# Purpose
+#   Setup a consistent shell environment across sessions by setting paths and running scripts
+# When to Run
+#   Run this script first after each login.
+#
+# Example
+#   `expect -c 'spawn ssh -tt -oHostKeyAlgorithms=+ssh-rsa -oPubKeyAcceptedKeyTypes=+ssh-rsa -oKexAlgorithms=+diffie-hellman-group1-sha1 -oMACs=hmac-sha1 admin@192.168.1.1; expect "password:"; send "[REDACTED]\r"; expect ">";  send "sh\r"; expect "#"; send ". data/modemshell\r"; interact'`
+## filename: modemshell
+## path: /data/modemshell
+## post-hook: chmod 755 $path
+
+export HOME=/data/root
+PATH="/data/sbin"             # Symbolic links to missing stock /bin/busybox multicall binaries
+PATH="${PATH}:/data/bin"             # Symbolic links to /data/usr/local/bin/busybox multicall binaries
+PATH="${PATH}:/data/usr/bin"         # Symbolic links to /data/usr/local/bin/toybox multicall binaries
+PATH="${PATH}:/data/usr/local/bin"   # Busybox & Toybox binaries, user scripts
+                                     # Stock paths
+PATH="${PATH}:/opt/bin"              # (empty)
+PATH="${PATH}:/bin"
+PATH="${PATH}:/sbin"
+PATH="${PATH}:/usr/bin"
+PATH="${PATH}:/usr/local/jamvm/bin"
+PATH="${PATH}:/opt/scripts"
+export PATH
+
+[ -f /data/root/profile.rc ] && . /data/root/profile.rc
+
+cd "$HOME" 2>/dev/null || cd /
+export ENV=/data/root/profile.rc
+
+exec /data/bin/sh "$@"
